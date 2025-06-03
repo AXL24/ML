@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from prep import load_data
 
 
-st.title("Wine Quality Data Explorer")
+st.title("  ༄༂χâγ--δựηɠ--ɱô--ɧìηɧ--δự--βáσ--ςɧấτ--ɭượηɠ--ɾượμ--ναηɠ--đỏ༂࿐ ")
 
 # Upload CSV
 X,y_ = load_data()  
