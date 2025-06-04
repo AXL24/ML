@@ -2,13 +2,9 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from prep import load_data
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from prep import load_data, detect_anomalies_isolation_forest
 from lr import train_logistic_regression
-from sklearn.ensemble import IsolationForest
-from sklearn.preprocessing import StandardScaler
+
 
 st.title("  ༄༂χâγ--δựηɠ--ɱô--ɧìηɧ--δự--βáσ--ςɧấτ--ɭượηɠ--ɾượμ--ναηɠ--đỏ༂࿐ ")
 
@@ -16,16 +12,6 @@ st.title("  ༄༂χâγ--δựηɠ--ɱô--ɧìηɧ--δự--βáσ--ςɧấτ--�
 X,y_ = load_data()  
 st.subheader("Preview of Data")
 st.dataframe(X.head(), use_container_width=True)
-
-# Apply Isolation Forest for anomaly detection with feature scaling
-def detect_anomalies_isolation_forest(X, y_, contamination=0.05, random_state=42):
-    
-    # Apply Isolation Forest
-    iso_forest = IsolationForest(contamination=contamination, random_state=random_state)
-    anomalies = iso_forest.fit_predict(X)
-    
-    # Return non-anomalous data (where anomalies == 1)
-    return X[anomalies == 1], y_[anomalies == 1]
 
 # Checkbox to enable anomaly detection
 apply_anomaly = st.checkbox("Remove anomalies (Isolation Forest)")
@@ -38,7 +24,7 @@ else:
 
 
 
-
+# Display the filtered data
 st.subheader("Summary Statistics")
 st.write(filtered_X.describe(), width=500, use_container_width=True)
 
@@ -61,6 +47,7 @@ sns.scatterplot(data=filtered_X, x=x_axis, y=y_axis, hue=filtered_y, palette="vi
 
 st.pyplot(fig)
 
+# Train Logistic Regression Model
 clf, report = train_logistic_regression(filtered_X=filtered_X, filtered_y=filtered_y)
 st.write("Classification Report:")
 st.json(report)
