@@ -18,7 +18,7 @@ st.subheader("Preview of Data")
 st.dataframe(X.head(), use_container_width=True)
 
 # Apply Isolation Forest for anomaly detection with feature scaling
-def detect_anomalies_isolation_forest(X, contamination=0.05, random_state=42):
+def detect_anomalies_isolation_forest(X, y_, contamination=0.05, random_state=42):
     
     # Apply Isolation Forest
     iso_forest = IsolationForest(contamination=contamination, random_state=random_state)
