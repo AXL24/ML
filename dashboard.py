@@ -37,8 +37,7 @@ else:
     filtered_X, filtered_y = X, y_
 
 
-st.subheader("Preview of Data")
-st.dataframe(filtered_X.head(), use_container_width=True)
+
 
 st.subheader("Summary Statistics")
 st.write(filtered_X.describe(), width=500, use_container_width=True)
