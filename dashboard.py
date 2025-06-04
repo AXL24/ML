@@ -9,7 +9,7 @@ from lr import train_logistic_regression
 st.title("  ༄༂χâγ--δựηɠ--ɱô--ɧìηɧ--δự--βáσ--ςɧấτ--ɭượηɠ--ɾượμ--ναηɠ--đỏ༂࿐ ")
 
 # Upload CSV
-X,y_ = load_data()  
+X, y_, scaler = load_data()  
 st.subheader("Preview of Data")
 st.dataframe(X.head(), use_container_width=True)
 
@@ -90,9 +90,12 @@ if st.button("Predict Quality"):
         'alcohol': [alcohol]
     })
     
+    # Scale the input data using the same scaler from training
+    scaled_input = scaler.transform(input_data)
+    
     # Make prediction
-    prediction = clf.predict(input_data)[0]
-    probability = clf.predict_proba(input_data)[0]
+    prediction = clf.predict(scaled_input)[0]
+    probability = clf.predict_proba(scaled_input)[0]
     
     # Display results
     st.success(f"Predicted Quality: {'High Quality' if prediction == 1 else 'Low Quality'}")

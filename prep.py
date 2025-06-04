@@ -10,11 +10,10 @@ def load_data():
     y = df2["quality"]
     scaler = MinMaxScaler()
     X = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
-    return X,y
+    return X, y, scaler
 
 # Apply Isolation Forest for anomaly detection with feature scaling
 def detect_anomalies_isolation_forest(X, y_, contamination=0.05, random_state=42):
-    
     # Apply Isolation Forest
     iso_forest = IsolationForest(contamination=contamination, random_state=random_state)
     anomalies = iso_forest.fit_predict(X)
