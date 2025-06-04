@@ -31,7 +31,7 @@ def detect_anomalies_isolation_forest(X, y_, contamination=0.05, random_state=42
 apply_anomaly = st.checkbox("Remove anomalies (Isolation Forest)")
 
 if apply_anomaly:
-    filtered_X, filtered_y = detect_anomalies_isolation_forest(X)
+    filtered_X, filtered_y = detect_anomalies_isolation_forest(X,y_)
     st.info(f"Anomalies removed: {len(X) - len(filtered_X)} rows")
 else:
     filtered_X, filtered_y = X, y_
