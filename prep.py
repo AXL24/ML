@@ -1,5 +1,5 @@
 import pandas as pd
-
+from sklearn.preprocessing import MinMaxScaler
 # Load your CSV (update path if needed)
 def load_data():
     # Assuming the CSV file is in the same directory as this script
