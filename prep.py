@@ -7,4 +7,6 @@ def load_data():
     df2 = df.drop_duplicates()
     X = df2.drop("quality", axis=1)
     y = df2["quality"]
+    scaler = MinMaxScaler()
+    X = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
     return X,y
