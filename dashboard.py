@@ -14,14 +14,23 @@ st.subheader("Preview of Data")
 st.dataframe(X.head(), use_container_width=True)
 
 # Checkbox to enable anomaly detection
-apply_anomaly = st.checkbox("Remove anomalies (Isolation Forest)")
+apply_anomaly1 = st.checkbox("Remove anomalies (Isolation Forest)")
+apply_anomaly2 = st.checkbox("Remove anomalies (IQR)")
 
-if apply_anomaly:
-    filtered_X, filtered_y = detect_anomalies_isolation_forest(X,y_)
+if apply_anomaly1 and apply_anomaly2:
+    # If both are selected, apply Isolation Forest first, then IQR on the result
+    filtered_X, filtered_y = detect_anomalies_isolation_forest(X, y_)
+    st.info(f"Anomalies removed by Isolation Forest: {len(X) - len(filtered_X)} rows")
+    filtered_X, filtered_y = detect_anomalies_iqr(filtered_X, filtered_y)
+    st.info(f"Anomalies removed by IQR: {len(X) - len(filtered_X)} rows (after Isolation Forest)")
+elif apply_anomaly1:
+    filtered_X, filtered_y = detect_anomalies_isolation_forest(X, y_)
+    st.info(f"Anomalies removed: {len(X) - len(filtered_X)} rows")
+elif apply_anomaly2:
+    filtered_X, filtered_y = detect_anomalies_iqr(X, y_)
     st.info(f"Anomalies removed: {len(X) - len(filtered_X)} rows")
 else:
     filtered_X, filtered_y = X, y_
-
 
 
 # Display the filtered data
