@@ -20,3 +20,26 @@ def detect_anomalies_isolation_forest(X, y_, contamination=0.05, random_state=42
     
     # Return non-anomalous data (where anomalies == 1)
     return X[anomalies == 1], y_[anomalies == 1]
+
+def detect_anomalies_iqr(X, y_, factor=2.5):
+    """
+    Detect anomalies in dataset X using the IQR method.
+    Compatible with Pandas DataFrames and Series.
+    """
+    # Convert to numpy arrays for calculation
+    X_values = X.values
+    Q1 = np.percentile(X_values, 25, axis=0)
+    Q3 = np.percentile(X_values, 75, axis=0)
+    IQR = Q3 - Q1
+
+    lower_bound = Q1 - factor * IQR
+    upper_bound = Q3 + factor * IQR
+
+    # Find the mask of non-anomalous rows
+    mask = np.all((X_values >= lower_bound) & (X_values <= upper_bound), axis=1)
+
+    # Apply mask by position using iloc to avoid index misalignment
+    filtered_X = X.iloc[mask]
+    filtered_y = y_.iloc[mask]
+
+    return filtered_X, filtered_y
