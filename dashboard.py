@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from prep import load_data, detect_anomalies_isolation_forest
+from prep import load_data, detect_anomalies_isolation_forest, detect_anomalies_iqr
 from lr import train_logistic_regression
 
 
